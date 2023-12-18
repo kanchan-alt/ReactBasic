@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {removeTodo} from '../features/todo/todoSlice'
+import {removeTodo, editTodo,cleanAllTodos} from '../features/todo/todoSlice'
 
 function Todos() {
     const todos = useSelector(state => state.todos)
@@ -16,6 +16,14 @@ function Todos() {
             key={todo.id}
           >
             <div className='text-white'>{todo.text}</div>
+
+          {/* edit button */}
+            <button className='text-white'
+            onClick={()=> dispatch(editTodo(todo.id))}>
+              Edit
+            </button>
+
+            {/*remove button*/}
             <button
              onClick={() => dispatch(removeTodo(todo.id))}
               className="text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
@@ -35,9 +43,13 @@ function Todos() {
                 />
               </svg>
             </button>
+           
           </li>
         ))}
       </ul>
+
+      <button className="text-white bg-red-500 border-0 py-1 px-4 my-6 focus:outline-none hover:bg-red-600 rounded text-md"
+      onClick={()=> dispatch(cleanAllTodos())}>Clear All </button>
     </>
   )
 }
